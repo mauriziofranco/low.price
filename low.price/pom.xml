@@ -145,7 +145,7 @@
 								<copy
 									todir="${project.build.directory}/classes/public">
 									<fileset
-										dir="${project.basedir}/basic-frontend-app/build" />
+										dir="${project.basedir}/frontend/build" />
 								</copy>
 							</target>
 						</configuration>
