@@ -1,8 +1,9 @@
 drop table if exists prize_registry;
 drop table if exists point_of_sale;
 drop table if exists brand;
-drop table if exists units_of_measure;
+
 drop table if exists products;
+drop table if exists unit_of_measure;
 drop table if exists meal_sub_categories;
 drop table if exists meal_categories;
 drop table if exists meals;
@@ -75,44 +76,51 @@ create table meal_sub_categories (
     ,CONSTRAINT `meal_categories_ibfk_2` FOREIGN KEY (`meal_category`) REFERENCES `meal_categories` (`id`)
 );
 
-insert into meal_sub_categories(id, label, meal, meal_category, level) VALUES (1, 'biscotti con gocce di cioccolato', 1, 1, 0);
-insert into meal_sub_categories(id, label, meal, meal_category, level) VALUES (2, 'biscotti alla panna(tipo macine)', 1, 1, 0);
+insert into meal_sub_categories(id, label, meal, meal_category, level) VALUES (1, 'biscotti con gocce di cioccolato', 1, 1, 100);
+insert into meal_sub_categories(id, label, meal, meal_category, level) VALUES (2, 'biscotti alla panna(tipo macine)', 1, 1, 200);
+--insert into meal_sub_categories(id, label, meal, meal_category, level) VALUES (3, 'biscotti', 1, 1, 0);
+insert into meal_sub_categories(id, label, meal, meal_category, level) VALUES (4, 'mozzarelle', 3, 2, 100);
 
-create table units_of_measure (
+create table unit_of_measure (
 	id bigint not null AUTO_INCREMENT,
-	label VARCHAR(100),
+	label VARCHAR(50) not null,
+	description VARCHAR(100),
 	level bigint,
 	primary key(id)
 );
 
-insert into units_of_measure(id, label, level) VALUES (1, 'confezioni', 10);
-insert into units_of_measure(id, label, level) VALUES (2, 'grammi', 100);
+insert into unit_of_measure(id, label, level) VALUES (1, 'confezioni', 10);
+insert into unit_of_measure(id, label, description, level) VALUES (2, 'gr', 'grammi', 100);
+insert into unit_of_measure(id, label, description, level) VALUES (3, 'l', 'litri', 200);
+insert into unit_of_measure(id, label, description, level) VALUES (4, 'ml', 'millilitri', 150);
 
 create table products (
 	id bigint not null AUTO_INCREMENT,
 	barcode_number  bigint,
 	product_name VARCHAR(100),
 	description varchar(1000),
-	unit_of_measure varchar(100),
+	unit_of_measure bigint,
 	measure int,
 	meal_category bigint,
 	meal_sub_category bigint,
 	manufacturer_name VARCHAR(100),
-     image_file_name varchar(255),
+    image_file_name varchar(255),
 	primary key(id),
 	CONSTRAINT barcode_number UNIQUE (barcode_number),
 	KEY `meal_category` (`meal_category`),
-     KEY `meal_sub_category` (`meal_sub_category`),
-     CONSTRAINT `meal_categories_ibfk_3` FOREIGN KEY (`meal_category`) REFERENCES `meal_categories` (`id`),
-     CONSTRAINT `meal_sub_categories_ibfk_1` FOREIGN KEY (meal_sub_category) REFERENCES `meal_sub_categories` (`id`)
+    KEY `meal_sub_category` (`meal_sub_category`),
+    KEY `unit_of_measure` (`unit_of_measure`),
+    CONSTRAINT `meal_categories_ibfk_3` FOREIGN KEY (`meal_category`) REFERENCES `meal_categories` (`id`),
+    CONSTRAINT `meal_sub_categories_ibfk_1` FOREIGN KEY (meal_sub_category) REFERENCES `meal_sub_categories` (`id`),
+    CONSTRAINT `unit_of_measure_ibfk_1` FOREIGN KEY (unit_of_measure) REFERENCES `unit_of_measure` (`id`)
 );
 
 
 insert into products (id, barcode_number, product_name, description, unit_of_measure, measure, meal_category, meal_sub_category, manufacturer_name, image_file_name) 
-             VALUES (1, 8017596003126, 'Frollini con Gocce di Cioccolato', '', 'grammi', 700, 1, 1, 'Dolciando', '8017596003126.png');
+             VALUES (1, 8017596003126, 'Frollini con Gocce di Cioccolato', '', 2, 700, 1, 1, 'Dolciando', '8017596003126.png');
 
 insert into products (id, barcode_number, product_name, description, unit_of_measure, measure, meal_category, meal_sub_category, manufacturer_name, image_file_name) 
-             VALUES (2, 20142766, 'Fior di Cioccolato', 'Frollini per la prima colazione', 'grammi', 700, 1, 1, 'Realforno', '20142766.jpg');
+             VALUES (2, 20142766, 'Fior di Cioccolato', 'Frollini per la prima colazione', 2, 700, 1, 1, 'Realforno', '20142766.jpg');
 
 
 create table brand (
