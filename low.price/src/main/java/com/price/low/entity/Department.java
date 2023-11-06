@@ -3,6 +3,11 @@
  */
 package com.price.low.entity;
 
+import java.time.Instant;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,4 +38,8 @@ public class Department {
     private String label;
     private String description;
     private int level;
+//    @CreatedBy
+//    private User user;
+//    @CreatedDate
+//    private Instant createdDate;
 }

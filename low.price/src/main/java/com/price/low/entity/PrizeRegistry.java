@@ -3,6 +3,8 @@
  */
 package com.price.low.entity;
 
+import java.sql.Timestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,25 +21,19 @@ import lombok.ToString;
  * 
  */
 @Entity
-@Table(name = "products")
+@Table(name = "prize_registry")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Product {
+public class PrizeRegistry {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	private Long barcode_number;
-    private String product_name;
-    private String description;
-    private Long unit_of_measure;
-    private Long measure;
-    private Long department_id;
-    private Long meal_category_id;
-    private Long meal_sub_category_id;
-    private String manufacturer_name;
-    private String image_file_name;
+    private long id;
+	private long product_id;
+    private Double prize;
+    private Timestamp insert_datetime;
+    private Long point_of_sale_id;
 }

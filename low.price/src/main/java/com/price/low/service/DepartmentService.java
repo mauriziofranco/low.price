@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.price.low.entity.Department;
 import com.price.low.repository.DepartmentRepository;
-import com.price.low.response.data.DepartmentRecord;
+import com.price.low.response.model.DepartmentRecord;
 
 //import franco.maurizio.hr.desk.com.persistence.entity.Role;
 //import franco.maurizio.hr.desk.com.persistence.entity.User;

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.price.low.entity.Department;
-import com.price.low.response.data.DepartmentRecord;
+import com.price.low.response.model.DepartmentRecord;
 import com.price.low.service.DepartmentService;
 
 

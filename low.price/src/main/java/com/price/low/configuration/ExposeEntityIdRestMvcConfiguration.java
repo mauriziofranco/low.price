@@ -8,6 +8,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
+import com.price.low.entity.Meal;
 import com.price.low.entity.MealCategory;
 import com.price.low.entity.MealSubCategory;
 
@@ -20,6 +21,7 @@ public class ExposeEntityIdRestMvcConfiguration implements RepositoryRestConfigu
 
 	@Override
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
+		config.exposeIdsFor(Meal.class);
 		config.exposeIdsFor(MealCategory.class);
 		config.exposeIdsFor(MealSubCategory.class);
 	}

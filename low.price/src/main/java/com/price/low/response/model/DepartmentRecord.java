@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.price.low.response.data;
+package com.price.low.response.model;
 
 /**
  * Provides data for department info

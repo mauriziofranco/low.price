@@ -19,25 +19,18 @@ import lombok.ToString;
  * 
  */
 @Entity
-@Table(name = "products")
+@Table(name = "unit_of_measure")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Product {
+public class UnitOfMeasure {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	private Long barcode_number;
-    private String product_name;
+    private long id;
+    private String unit_of_measure_label;
     private String description;
-    private Long unit_of_measure;
-    private Long measure;
-    private Long department_id;
-    private Long meal_category_id;
-    private Long meal_sub_category_id;
-    private String manufacturer_name;
-    private String image_file_name;
+    private long level;
 }
