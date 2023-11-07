@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.price.low.entity.PrizeRegistry;
 
 /**
- * Provides a repository for the v entity
+ * Provides a repository for the PrizeRegistry entity
  * 
  * Provides data for PrizeRegistry info
  * 

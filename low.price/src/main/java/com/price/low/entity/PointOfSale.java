@@ -21,19 +21,21 @@ import lombok.ToString;
  * @author maurizio.franco@ymail.com
  */
 @Entity
-@Table(name = "prize_registry")
+@Table(name = "point_of_sale")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class PrizeRegistry {
+public class PointOfSale {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-	private long product_id;
-    private Double prize;
-    private Timestamp insert_datetime;
     private Long point_of_sale_id;
+	private Long brand_id;
+    private String point_of_sale_full_business_name;
+    private String point_of_sale_city;
+    private String point_of_sale_address;
+    private String point_of_sale_province;
+    private Timestamp point_of_sale_insert_datetime;
 }

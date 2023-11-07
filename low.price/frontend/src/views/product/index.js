@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
+
+import * as Commons from '../../commons.js';
+import * as Constants from '../../constants.js';
+
 // import * as Constants from '../../constants' ;
-import './index.css';
+// import './index.css';
 // import * as Commons from '../../commons.js' ;
 // import { Redirect } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
@@ -8,7 +12,8 @@ import { Button } from 'react-bootstrap';
 export default class ProductInsertForm extends Component {
 	
 	componentDidMount() {			
-		
+		this.fetchUnitsOfMeasure();
+    this.fetchStores();
 		// this.fetchCourseCodes.bind(this);
 		// this.fetchCourseCodes();
 		
@@ -21,6 +26,21 @@ export default class ProductInsertForm extends Component {
 		// this.handleSubmit = this.handleSubmit.bind(this);
 		
 		this.state = {
+        unitsOfMeasureFromApi: [],
+        unitsOfMeasureListForSelect: [{
+          id: 0,
+          label:
+            "Seleziona un'unità di misura",
+        }],
+        selectedUnitOfMeasureId: 0,
+        storesFromApi: [],
+        storesListForSelect: [{
+          id: 0,
+          label:
+            "Seleziona un punto vendita",
+        }],
+        selectedStoreId: 0,
+
 				courseCodes : [],
 				selectedPositionCode: '',
 				
@@ -51,6 +71,53 @@ export default class ProductInsertForm extends Component {
 	// fetchCourseCodes = () =>{
 	// 	Commons.executeFetch (Constants.FULL_COURSEPAGE_API_URI, 'GET', this.setCourseCodes);
 	// }
+
+  fetchUnitsOfMeasure = () =>{
+    //Commons.executeFetchWithHeader(Constants.UNITS_OF_MEASURE_API, "GET", { 'Content-Type': 'application/json' }, this.insertSuccess, Commons.operationError, JSON.stringify(item));
+    Commons.executeFetchWithHeader(Constants.UNITS_OF_MEASURE_API, "GET", null, this.fetchUnitsOfMeasureSuccess, Commons.operationError, null);
+  }
+
+  fetchStores = () =>{
+    Commons.executeFetchWithHeader(Constants.FULL_STORES_API, "GET", null, this.fetchStoresSuccess, Commons.operationError, null);
+  }
+  
+
+  fetchUnitsOfMeasureSuccess = (data) => {
+      // console.log("fetchUnitsOfMeasureSuccess - START");
+      // console.log(data);
+      // console.log(data._embedded.unitOfMeasures);
+      // console.log("fetchUnitsOfMeasureSuccess - END");
+      this.setState({ unitsOfMeasureFromApi: data._embedded.unitOfMeasures });
+      let unitsOfMeasureListForSelect = [...this.state.unitsOfMeasureListForSelect].concat(
+        data._embedded.unitOfMeasures.map(
+          (item) => ({
+            id: item.id, 
+            label: (item.unit_of_measure_label + (item.description!=null?(" - ("+item.description+")"):"")) 
+          })
+        )
+      );
+      this.setState({unitsOfMeasureListForSelect: unitsOfMeasureListForSelect});
+      
+  }
+
+  fetchStoresSuccess = (data) => {
+    // console.log("fetchStoresSuccess - START");
+    this.setState({ storesFromApi: data });
+      let storesListForSelect = [...this.state.storesListForSelect].concat(
+        data.map(
+          (item) => ({
+            id: item.id, 
+            label:  item.brand_name + " - " + item.point_of_sale_city
+
+          })
+        )
+      );
+      this.setState({storesListForSelect: storesListForSelect});
+    // console.log(data);
+    // console.log(data);
+    // console.log("fetchStoresSuccess - END");
+    this.setState({ storesListForSelect: storesListForSelect });
+}
 	
 	// setCourseCodes = (responseData) => {
 	// 	this.setState({ courseCodes: responseData });
@@ -107,10 +174,10 @@ export default class ProductInsertForm extends Component {
 	//       [name]: value,    });
 	// }
     
-  //   goBack(event){
-  //   	event.preventDefault();
-  //       this.props.history.goBack();
-  //   }
+    goBack(event){
+    	event.preventDefault();
+        this.props.history.goBack();
+    }
 	
 	render () {
 		return (
@@ -123,55 +190,128 @@ export default class ProductInsertForm extends Component {
 			        <div className="panel-body">
 			            <form onSubmit={this.handleSubmit}>
 				            <div className="row">
-				                <div className="col-25">
-                                    <label>Nome</label>
-                                </div>
-                                <div className="col-75">
-                                    <input type="text" className="candidate-input-form" name="firstname" placeholder="Nome" onChange={this.handleInputChange} required/>
-                                </div>
+                        <div className="col-25">
+                            <label>Codice a barre</label>
+                        </div>
+                        <div className="col-75">
+                            <input type="number" className="candidate-input-form" name="barcode_number" placeholder="codice a barre" onChange={this.handleInputChange} required/>
+                        </div>
 				            </div>
 				            <div className="row">
 				                <div className="col-25">
-				                    <label >Cognome</label>
+				                    <label >Etichetta/Nome prodotto</label>
 				                </div>
 				                <div className="col-75">
-				                    <input type="text" className="candidate-input-form" name="lastname" placeholder="Cognome" onChange={this.handleInputChange} required/>
+				                    <input type="text" className="candidate-input-form" name="product_name" placeholder="nome prodotto" onChange={this.handleInputChange} required/>
 				                </div>
 				            </div>
 				            <div className="row">
 				                <div className="col-25">
-				                    <label>Email</label>
+				                    <label>Descrizione prodotto</label>
 				                </div>
 				                <div className="col-75">
-				                    <input type="email" className="candidate-input-form" name="email" placeholder="Email" onChange={this.handleInputChange} required/>
+				                    <input type="text" className="candidate-input-form" name="description" placeholder="descrizione prodotto" onChange={this.handleInputChange} required/>
+				                </div>
+				            </div>
+                    <div className="row">
+				                <div className="col-25">
+				                    <label>Denominazione produttore</label>
+				                </div>
+				                <div className="col-75">
+				                    <input type="text" className="candidate-input-form" name="manufacturer_name" placeholder="denominazione produttore" onChange={this.handleInputChange} required/>
 				                </div>
 				            </div>
 				            <div className="row">
 				                <div className="col-25">
-				                    <label>Posizione</label>
+				                    <label>Unità di misura della quantità</label>
 				              </div>
 				              <div className="col-75">
-					              <select name="positionCode" className="candidate-input-form" defaultValue={this.state.selectedPositionCode} onChange={this.handleInputChange} required>
-							        {this.state.courseCodes.map((e, key) => {
-							        	return <option key={key} value={e.code}>{e.title}</option>;
+					              <select name="unit_of_measure" className="candidate-input-form" defaultValue={this.state.selectedUnitOfMeasureId} onChange={this.handleInputChange} required>
+							        {this.state.unitsOfMeasureListForSelect.map((e, key) => {
+							        	return <option key={key} value={e.id}>{e.label}</option>;
 							        })}
 						          </select>
 				              </div>
 				            </div>
-				            <div className="row">
-				                <div className="col-25">
-				                    <label>Allega CV(.doc,.pdf,.docx,.odt)</label>
+                    <div className="row">
+                        <div className="col-25">
+                            <label>Quantità(peso, confezioni, misura)</label>
+                        </div>
+                        <div className="col-75">
+                            <input type="number" className="candidate-input-form" name="measure" placeholder="quantità" onChange={this.handleInputChange} required/>
+                        </div>
+				            </div>
+                    
+                    <div className="row">
+                        <div className="col-25">
+                            <label>Punto vendita</label>
+                        </div>
+                        <div className="col-75">
+                          <select name="prize_registry_point_of_sale_id" className="candidate-input-form" defaultValue={this.state.selectedStoreId} onChange={this.handleInputChange} required>
+                            {this.state.storesListForSelect.map((e, key) => {
+                              return <option key={key} value={e.id}>{e.label}</option>;
+                            })}
+                          </select>
 				                </div>
-				                <div className="col-75">
-				                    <input type="file" id="cvpath" accept=".doc,.pdf,.docx,.odt" />
-				                </div>
+				            </div>
+                    <div className="row">
+                        <div className="col-25">
+                            <label>Prezzo a cui il prodotto è in vendita(al momento dell'acquisto)</label>
+                        </div>
+                        <div className="col-75">
+                            <input type="number" min="0.00" max="10000.00" step="0.01" className="candidate-input-form" name="prize" placeholder="prezzo di vendità" onChange={this.handleInputChange} required/>
+                        </div>
+				            </div>
+                    <div className="row">
+                        <div className="col-25">
+                            <label>Prezzo di listino</label>
+                        </div>
+                        <div className="col-75">
+                            <input type="number" className="candidate-input-form" name="list_prize" placeholder="prezzo di listino" onChange={this.handleInputChange} required/>
+                        </div>
 				            </div>
 				            <div className="row">
 				                <div className="col-25">
-				                    <label>Allega immagine profilo(.png,.jpeg,.gif,.jpg)</label>
+				                    <label>Immagine del prodotto(.png,.jpeg,.gif,.jpg)</label>
 				                </div>
 				                <div className="col-75">
-				                    <input type="file" id="imgpath" accept=".png,.jpeg,.gif,.jpg" />
+				                    <input type="file" id="image_file_name" accept=".png,.jpeg,.gif,.jpg" />
+				                </div>
+				            </div>
+                    <div className="row">
+                        <div className="col-25">
+                            <label>Categoria di prodotto</label>
+                        </div>
+                        <div className="col-75">
+                          <select name="department_id" className="candidate-input-form" defaultValue={this.state.selectedDepartment_id} onChange={this.handleInputChange} required>
+                            {this.state.courseCodes.map((e, key) => {
+                              return <option key={key} value={e.code}>{e.title}</option>;
+                            })}
+                          </select>
+				                </div>
+				            </div>
+                    <div className="row">
+                        <div className="col-25">
+                            <label>Categoria di pasto</label>
+                        </div>
+                        <div className="col-75">
+                          <select name="meal_category_id" className="candidate-input-form" defaultValue={this.state.selectedMeal_category_id} onChange={this.handleInputChange} required>
+                            {this.state.courseCodes.map((e, key) => {
+                              return <option key={key} value={e.code}>{e.title}</option>;
+                            })}
+                          </select>
+				                </div>
+				            </div>
+                    <div className="row">
+                        <div className="col-25">
+                            <label>Sottocategoria di pasto</label>
+                        </div>
+                        <div className="col-75">
+                          <select name="meal_sub_category_id" className="candidate-input-form" defaultValue={this.state.selectedMeal_sub_category_id} onChange={this.handleInputChange} required>
+                            {this.state.courseCodes.map((e, key) => {
+                              return <option key={key} value={e.code}>{e.title}</option>;
+                            })}
+                          </select>
 				                </div>
 				            </div>
 				            <div className="row insert-form-buttons">

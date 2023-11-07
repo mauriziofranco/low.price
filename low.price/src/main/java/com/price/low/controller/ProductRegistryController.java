@@ -33,8 +33,8 @@ import com.price.low.service.FullProductRegistryService;
 
 @RestController
 @RequestMapping("/api/v1/products")
-public class FullProductRegistryController {
-	public static final Logger logger = LoggerFactory.getLogger(FullProductRegistryController.class);
+public class ProductRegistryController {
+	public static final Logger logger = LoggerFactory.getLogger(ProductRegistryController.class);
 	
 	@Autowired
 	private FullProductRegistryService fullProductRegistryService ;

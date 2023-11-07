@@ -139,19 +139,19 @@ insert into unit_of_measure(id, unit_of_measure_label, description, level) VALUE
 insert into unit_of_measure(id, unit_of_measure_label, description, level) VALUES (6, 'rotoli', 'rotoli', 20);
 
 create table brand (
-    id bigint not null AUTO_INCREMENT,
+    brand_id bigint not null AUTO_INCREMENT,
     brand_name varchar(100) not null, 
-    full_business_name varchar(200),
-    logo_image_file_name varchar(255),
-    insert_datetime datetime not null,
+    brand_full_business_name varchar(200),
+    brand_logo_image_file_name varchar(255),
+    brand_insert_datetime datetime not null,
     --insert_by_user_id bigint not null,
-    primary key(id)
+    primary key(brand_id)
     --,
     --KEY `product_id` (`product_id`),
     --CONSTRAINT `product_id_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
 );
 
-insert into brand (id, brand_name, insert_datetime, logo_image_file_name) values
+insert into brand (brand_id, brand_name, brand_insert_datetime, brand_logo_image_file_name) values
              (1, 'EUROSPIN', '2023-10-02 13:45:00', 'eurospin.png'),
              (2, 'LIDL', '2023-10-04 09:35:00', 'lidl.png'),
              (3, 'IN''S Mercato', '2023-10-23 09:41:00', 'insmercato.png'),
@@ -162,25 +162,25 @@ insert into brand (id, brand_name, insert_datetime, logo_image_file_name) values
              ;
 
 create table point_of_sale (
-    id bigint not null AUTO_INCREMENT,
+    point_of_sale_id bigint not null AUTO_INCREMENT,
     brand_id bigint not null, 
     point_of_sale_full_business_name varchar(1000),
-    city varchar(100) not null,
-    address varchar(300),
-    province varchar(100),
-    insert_datetime datetime not null,
-    primary key(id),
+    point_of_sale_city varchar(100) not null,
+    point_of_sale_address varchar(300),
+    point_of_sale_province varchar(100),
+    point_of_sale_insert_datetime datetime not null,
+    primary key(point_of_sale_id),
     KEY `brand_id` (`brand_id`),
-    CONSTRAINT `brand_id_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`)
+    CONSTRAINT `brand_id_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`brand_id`)
 );
 
-insert into point_of_sale (id, brand_id, insert_datetime, city, address, province)  VALUES
-             (1, 1, '2023-10-02 13:45:00', 'Cologno Monzese', null, null),
-             (2, 2, '2023-10-04 09:35:00', 'Cologno Monzese', null, null),
-             (3, 3, '2023-10-23 09:41:00', 'Cologno Monzese', null, null),
-             (4, 4, '2023-10-23 18:43:00', 'Cologno Monzese', null, null),
-             (5, 5, '2023-10-31 18:51:00', 'Cologno Monzese', null, null),
-             (6, 6, '2023-11-04 18:05:00', 'Cassina de Pecchi', 'via Antonia Frigerio Conte 1', 'Milano')
+insert into point_of_sale (point_of_sale_id, brand_id, point_of_sale_insert_datetime, point_of_sale_city, point_of_sale_address, point_of_sale_province, point_of_sale_full_business_name)  VALUES
+             (1, 1, '2023-10-02 13:45:00', 'Cologno Monzese', null, null, null),
+             (2, 2, '2023-10-04 09:35:00', 'Cologno Monzese', null, null, null),
+             (3, 3, '2023-10-23 09:41:00', 'Cologno Monzese', null, null, null),
+             (4, 4, '2023-10-23 18:43:00', 'Cologno Monzese', null, null, null),
+             (5, 5, '2023-10-31 18:51:00', 'Cologno Monzese', null, null, null),
+             (6, 6, '2023-11-04 18:05:00', 'Cassina de Pecchi', 'via Antonia Frigerio Conte 1', 'Milano', null)
              ;
 
 create table products (
@@ -252,7 +252,7 @@ create table prize_registry (
     primary key(id),
     KEY `product_id` (`product_id`),
     CONSTRAINT `product_id_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-    CONSTRAINT `point_of_sale_id_ibfk_1` FOREIGN KEY (`point_of_sale_id`) REFERENCES `point_of_sale` (`id`)
+    CONSTRAINT `point_of_sale_id_ibfk_1` FOREIGN KEY (`point_of_sale_id`) REFERENCES `point_of_sale` (`point_of_sale_id`)
 );
 
 

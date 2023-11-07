@@ -32,7 +32,7 @@ class ComparatorView extends Component {
     this.fetchMealCategories();
     this.fetchMealSubCategories();
     this.fetchProducts();
-    console.log("componentDidMount - END");
+    // console.log("componentDidMount - END");
   }
 
   fetchProducts = () => {
@@ -51,7 +51,7 @@ class ComparatorView extends Component {
   };
 
   updatedFilteredProductsList = () => {
-    console.log("updatedFilteredProductsList - START");
+    // console.log("updatedFilteredProductsList - START");
     let productsFromApi = [...this.state.productsFromApi];
     let filteredProductsForList = productsFromApi.filter(
       (product) =>
@@ -85,7 +85,7 @@ class ComparatorView extends Component {
       </li>
     ));
     this.setState({ filteredProductsList: filteredProductsList });
-    console.log("updatedFilteredProductsList - END");
+    // console.log("updatedFilteredProductsList - END");
   };
 
   fetchMealSubCategories = () => {
@@ -108,14 +108,14 @@ class ComparatorView extends Component {
 
   //prepareMealSubCategoriesListForSelect = (fetchedMealSubCategoriesFromApi) => {
   prepareMealSubCategoriesListForSelect = () => {
-    console.log("prepareMealSubCategoriesListForSelect.START");
+    // console.log("prepareMealSubCategoriesListForSelect.START");
     let fetchedMealSubCategoriesFromApi = [
       ...this.state.mealSubCategoriesFromApi,
     ];
     let defaultMealSubCategories = [...this.state.defaultMealSubCategories];
-    console.log(defaultMealSubCategories.length);
-    console.log(fetchedMealSubCategoriesFromApi);
-    console.log(this.state.selectedMealCategoryId === 0);
+    // console.log(defaultMealSubCategories.length);
+    // console.log(fetchedMealSubCategoriesFromApi);
+    // console.log(this.state.selectedMealCategoryId === 0);
     const selectedMealCategoryId = this.state.selectedMealCategoryId;
     let mealSubCategoriesListForSelect = defaultMealSubCategories.concat(
       fetchedMealSubCategoriesFromApi.filter(
@@ -124,7 +124,7 @@ class ComparatorView extends Component {
           mealSubCategory.meal_category_id === selectedMealCategoryId
       )
     );
-    console.log(mealSubCategoriesListForSelect.length);
+    // console.log(mealSubCategoriesListForSelect.length);
     this.setState({ mealSubCategoriesList: mealSubCategoriesListForSelect });
   };
 
@@ -138,7 +138,6 @@ class ComparatorView extends Component {
       .then((data) => {
         let fetchedMealCategoriesFromApi = data.body._embedded.mealCategories;
         this.setState({ mealCategoriesFromApi: fetchedMealCategoriesFromApi });
-        //this.prepareMealCategoriesListForSelect(fetchedMealCategoriesFromApi);
         this.prepareMealCategoriesListForSelect();
       });
   };
@@ -156,7 +155,7 @@ class ComparatorView extends Component {
   };
 
   handleMealCategoryChange = (data) => {
-    console.log(data.target.value);
+    // console.log(data.target.value);
     this.setState(
       { selectedMealCategoryId: parseInt(data.target.value) },
       () => {
@@ -167,7 +166,7 @@ class ComparatorView extends Component {
   };
 
   handleMealSubCategoryChange = (data) => {
-    console.log(data.target.value);
+    // console.log(data.target.value);
     this.setState(
       { selectedMealSubCategoryId: parseInt(data.target.value) },
       () => {

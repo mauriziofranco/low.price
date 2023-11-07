@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.price.low.response.model.ProductRecord;
+import com.price.low.response.model.PointOfSaleRecord;
 /**
  * ProductRecordRepository
  * 
@@ -12,10 +12,8 @@ import com.price.low.response.model.ProductRecord;
  *
  */
 @Repository
-public interface ProductRecordRepository {
+public interface PointOfSaleRecordRepository {
 	
-	List<ProductRecord> findAllProducts();
-	
-	ProductRecord findByBarcode(String barcode);
+	List<PointOfSaleRecord> findAllPointsOfSale();
 	
 }

@@ -6,7 +6,7 @@ package com.price.low.response.model;
 import java.sql.Timestamp;
 
 /**
- * Provides data for product full info to list into fronttend lists
+ * Provides data for product full info to list into frontend
  * 
  * @author maurizio.franco@ymail.com
  */
