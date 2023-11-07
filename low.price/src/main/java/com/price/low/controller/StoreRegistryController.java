@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.price.low.response.model.PointOfSaleRecord;
+import com.price.low.response.model.StoreRecord;
 import com.price.low.response.model.ProductRecord;
 import com.price.low.service.StoreRegistryService;
 
@@ -36,8 +36,8 @@ public class StoreRegistryController {
 	private StoreRegistryService storeRegistryService ;
 
 	@GetMapping("/")
-	public ResponseEntity<List<PointOfSaleRecord>> getItems() {
-		List<PointOfSaleRecord> items = storeRegistryService.getAll();
+	public ResponseEntity<List<StoreRecord>> getItems() {
+		List<StoreRecord> items = storeRegistryService.getAll();
 		
 		if (items.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);

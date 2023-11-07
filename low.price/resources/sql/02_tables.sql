@@ -1,5 +1,5 @@
 drop table if exists prize_registry;
-drop table if exists point_of_sale;
+drop table if exists store;
 drop table if exists brand;
 drop table if exists products;
 drop table if exists unit_of_measure;
@@ -161,20 +161,20 @@ insert into brand (brand_id, brand_name, brand_insert_datetime, brand_logo_image
              
              ;
 
-create table point_of_sale (
-    point_of_sale_id bigint not null AUTO_INCREMENT,
+create table store (
+    store_id bigint not null AUTO_INCREMENT,
     brand_id bigint not null, 
-    point_of_sale_full_business_name varchar(1000),
-    point_of_sale_city varchar(100) not null,
-    point_of_sale_address varchar(300),
-    point_of_sale_province varchar(100),
-    point_of_sale_insert_datetime datetime not null,
-    primary key(point_of_sale_id),
+    store_full_business_name varchar(1000),
+    store_city varchar(100) not null,
+    store_address varchar(300),
+    store_province varchar(100),
+    store_insert_datetime datetime not null,
+    primary key(store_id),
     KEY `brand_id` (`brand_id`),
     CONSTRAINT `brand_id_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`brand_id`)
 );
 
-insert into point_of_sale (point_of_sale_id, brand_id, point_of_sale_insert_datetime, point_of_sale_city, point_of_sale_address, point_of_sale_province, point_of_sale_full_business_name)  VALUES
+insert into store (store_id, brand_id, store_insert_datetime, store_city, store_address, store_province, store_full_business_name)  VALUES
              (1, 1, '2023-10-02 13:45:00', 'Cologno Monzese', null, null, null),
              (2, 2, '2023-10-04 09:35:00', 'Cologno Monzese', null, null, null),
              (3, 3, '2023-10-23 09:41:00', 'Cologno Monzese', null, null, null),
@@ -248,15 +248,15 @@ create table prize_registry (
     prize double not null,
     list_prize double,
     insert_datetime datetime not null,
-    point_of_sale_id bigint not null,
+    store_id bigint not null,
     primary key(id),
     KEY `product_id` (`product_id`),
     CONSTRAINT `product_id_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-    CONSTRAINT `point_of_sale_id_ibfk_1` FOREIGN KEY (`point_of_sale_id`) REFERENCES `point_of_sale` (`point_of_sale_id`)
+    CONSTRAINT `store_id_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`)
 );
 
 
-insert into prize_registry (id, product_id, prize, list_prize, insert_datetime, point_of_sale_id) VALUES
+insert into prize_registry (id, product_id, prize, list_prize, insert_datetime, store_id) VALUES
              ( 1,  1, 2.39, 2.39, '2023-10-02 13:45:00', 1),
              ( 2,  2, 2.39, 2.39, '2023-10-04 09:35:00', 2),
              ( 3,  3, 3.49, 3.49, '2023-10-18 08:38:00', 2),

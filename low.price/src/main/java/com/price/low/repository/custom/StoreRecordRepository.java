@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.price.low.response.model.PointOfSaleRecord;
+import com.price.low.response.model.StoreRecord;
 /**
- * ProductRecordRepository
+ * StoreRecordRepository
  * 
  * @author maurizio.franco@ymail.com
  *
  */
 @Repository
-public interface PointOfSaleRecordRepository {
+public interface StoreRecordRepository {
 	
-	List<PointOfSaleRecord> findAllPointsOfSale();
+	List<StoreRecord> findAllStores();
 	
 }

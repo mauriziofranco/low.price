@@ -24,7 +24,7 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
 
 //    select * from products p
 //    JOIN prize_registry pr ON p.id = pr.product_id
-//     JOIN point_of_sale pos ON pr.point_of_sale_id = pos.point_of_sale_id
+//     JOIN store pos ON pr.store_id = pos.store_id
 //     JOIN brand br ON pos.brand_id = br.brand_id
 //     JOIN unit_of_measure uom ON uom.id = p.unit_of_measure
 
@@ -32,7 +32,7 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
         return jdbcTemplate.query(
         		"select * from products p\r\n"
         		+ "JOIN prize_registry pr ON p.id = pr.product_id\r\n"
-        		+ "JOIN point_of_sale pos ON pr.point_of_sale_id = pos.point_of_sale_id\r\n"
+        		+ "JOIN store pos ON pr.store_id = pos.store_id\r\n"
         		+ "JOIN brand br ON pos.brand_id = br.brand_id\r\n"
         		+ "JOIN unit_of_measure uom ON uom.id = p.unit_of_measure\r\n"
         		+ "ORDER BY p.id", (rs, rowNum) -> new ProductRecord(
@@ -52,7 +52,7 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
 		                rs.getDouble("list_prize"),
 		                rs.getDouble("prize"),
 		                rs.getTimestamp("insert_datetime"),
-		                rs.getLong("point_of_sale_id"),
+		                rs.getLong("store_id"),
 		                rs.getString("brand_name"),
 		                rs.getString("brand_logo_image_file_name")
 		        ));
@@ -60,7 +60,7 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
     
 //    select * from products p
 //    JOIN prize_registry pr ON p.id = pr.product_id
-//    JOIN point_of_sale pos ON pr.point_of_sale_id = pos.point_of_sale_id
+//    JOIN store pos ON pr.store_id = pos.store_id
 //    JOIN brand br ON pos.brand_id = br.brand_id
 //    JOIN unit_of_measure uom ON uom.id = p.unit_of_measure
 //    WHERE p.barcode_number=???;
@@ -69,7 +69,7 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
       return jdbcTemplate.queryForObject(
       		"select * from products p\r\n"
       		+ "JOIN prize_registry pr ON p.id = pr.product_id\r\n"
-      		+ "JOIN point_of_sale pos ON pr.point_of_sale_id = pos.point_of_sale_id\r\n"
+      		+ "JOIN store pos ON pr.store_id = pos.store_id\r\n"
       		+ "JOIN brand br ON pos.brand_id = br.brand_id\r\n"
         	+ "JOIN unit_of_measure uom ON uom.id = p.unit_of_measure\r\n"
       		+ "WHERE p.barcode_number=" + barcode, (rs, rowNum) -> new ProductRecord(
@@ -89,7 +89,7 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
 		                rs.getDouble("list_prize"),
 		                rs.getDouble("prize"),
 		                rs.getTimestamp("insert_datetime"),
-		                rs.getLong("point_of_sale_id"),
+		                rs.getLong("store_id"),
 		                rs.getString("brand_name"),
 		                rs.getString("brand_logo_image_file_name")
 		        ));
