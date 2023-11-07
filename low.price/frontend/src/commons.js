@@ -38,7 +38,7 @@ export function executeFetchWithHeader(uri, method, headerToken, successCallback
 }
 
 export function fetchItemsFromApiSuccess (data, extractListFunction, extractLabelFromItem, initialListForSelect, updateListForSelect) {
-    console.log("fetchItemsFromApiSuccess - START");
+    // console.log("fetchItemsFromApiSuccess - START");
 	let itemsFromApi = extractListFunction(data)
     // this.setState({ itemsFromApi: itemsFromApi });
 	let itemsListForSelect = [...initialListForSelect].concat(
@@ -50,8 +50,8 @@ export function fetchItemsFromApiSuccess (data, extractListFunction, extractLabe
 	)
 	);
 	updateListForSelect(itemsListForSelect)
-    console.log(data);
-    console.log("fetchItemsFromApiSuccess - END");
+    // console.log(data);
+    // console.log("fetchItemsFromApiSuccess - END");
 }
 
 export function operationError(err, errorMessage) {

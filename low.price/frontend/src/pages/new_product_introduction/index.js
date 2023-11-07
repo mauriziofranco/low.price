@@ -20,7 +20,7 @@ export default class ProductInsertForm extends Component {
 		super(props);
 		// this.goBack = this.goBack.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
-		// this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 		
 		this.state = {
         unitsOfMeasureFromApi: [],
@@ -168,8 +168,8 @@ export default class ProductInsertForm extends Component {
 		const name = target.name;
 		console.log("ProductInsertForm.handleInputChange - name: " + name + " - value: " + value);
 		//this.props.handleInputChange(event);
-		// this.setState({
-		//   [name]: value,    });
+		this.setState({
+		  [name]: value,    });
 	}
     
     goBack(event){
@@ -192,7 +192,7 @@ export default class ProductInsertForm extends Component {
                             <label>Codice a barre</label>
                         </div>
                         <div className="col-75">
-                            <input type="number" className="candidate-input-form" name="barcode_number" placeholder="codice a barre" onChange={this.handleInputChange} required/>
+                            <input type="number" className="candidate-input-form" name="barcode_number" placeholder="codice a barre" onChange={this.handleInputChange} />
                         </div>
 				            </div>
 				            <div className="row">
@@ -200,7 +200,7 @@ export default class ProductInsertForm extends Component {
 				                    <label >Etichetta/Nome prodotto</label>
 				                </div>
 				                <div className="col-75">
-				                    <input type="text" className="candidate-input-form" name="product_name" placeholder="nome prodotto" onChange={this.handleInputChange} required/>
+				                    <input type="text" className="candidate-input-form" name="product_name" placeholder="nome prodotto" onChange={this.handleInputChange} />
 				                </div>
 				            </div>
 				            <div className="row">
@@ -208,7 +208,7 @@ export default class ProductInsertForm extends Component {
 				                    <label>Descrizione prodotto</label>
 				                </div>
 				                <div className="col-75">
-				                    <input type="text" className="candidate-input-form" name="description" placeholder="descrizione prodotto" onChange={this.handleInputChange} required/>
+				                    <input type="text" className="candidate-input-form" name="description" placeholder="descrizione prodotto" onChange={this.handleInputChange} />
 				                </div>
 				            </div>
                     <div className="row">
@@ -216,7 +216,7 @@ export default class ProductInsertForm extends Component {
 				                    <label>Denominazione produttore</label>
 				                </div>
 				                <div className="col-75">
-				                    <input type="text" className="candidate-input-form" name="manufacturer_name" placeholder="denominazione produttore" onChange={this.handleInputChange} required/>
+				                    <input type="text" className="candidate-input-form" name="manufacturer_name" placeholder="denominazione produttore" onChange={this.handleInputChange} />
 				                </div>
 				            </div>
 				            <div className="row">
@@ -224,7 +224,7 @@ export default class ProductInsertForm extends Component {
 				                    <label>Unità di misura della quantità</label>
 				              </div>
 				              <div className="col-75">
-					              <select name="unit_of_measure" className="candidate-input-form" defaultValue={this.state.selectedUnitOfMeasureId} onChange={this.handleInputChange} required>
+					              <select name="unit_of_measure" className="candidate-input-form" defaultValue={this.state.selectedUnitOfMeasureId} onChange={this.handleInputChange} >
 							        {this.state.unitsOfMeasureListForSelect.map((e, key) => {
 							        	return <option key={key} value={e.id}>{e.label}</option>;
 							        })}
@@ -236,7 +236,7 @@ export default class ProductInsertForm extends Component {
                             <label>Quantità(peso, confezioni, misura)</label>
                         </div>
                         <div className="col-75">
-                            <input type="number" className="candidate-input-form" name="measure" placeholder="quantità" onChange={this.handleInputChange} required/>
+                            <input type="number" className="candidate-input-form" name="measure" placeholder="quantità" onChange={this.handleInputChange} />
                         </div>
 				            </div>
                     
@@ -245,7 +245,7 @@ export default class ProductInsertForm extends Component {
                             <label>Punto vendita</label>
                         </div>
                         <div className="col-75">
-                          <select name="prize_registry_point_of_sale_id" className="candidate-input-form" defaultValue={this.state.selectedStoreId} onChange={this.handleInputChange} required>
+                          <select name="prize_registry_point_of_sale_id" className="candidate-input-form" defaultValue={this.state.selectedStoreId} onChange={this.handleInputChange} >
                             {this.state.storesListForSelect.map((e, key) => {
                               return <option key={key} value={e.id}>{e.label}</option>;
                             })}
@@ -257,7 +257,7 @@ export default class ProductInsertForm extends Component {
                             <label>Prezzo a cui il prodotto è in vendita(al momento dell'acquisto)</label>
                         </div>
                         <div className="col-75">
-                            <input type="number" min="0.00" max="10000.00" step="0.01" className="candidate-input-form" name="prize" placeholder="prezzo di vendità" onChange={this.handleInputChange} required/>
+                            <input type="number" min="0.00" max="10000.00" step="0.01" className="candidate-input-form" name="prize" placeholder="prezzo di vendità" onChange={this.handleInputChange} />
                         </div>
 				            </div>
                     <div className="row">
@@ -265,7 +265,7 @@ export default class ProductInsertForm extends Component {
                             <label>Prezzo di listino</label>
                         </div>
                         <div className="col-75">
-                            <input type="number" className="candidate-input-form" name="list_prize" placeholder="prezzo di listino" onChange={this.handleInputChange} required/>
+                            <input type="number" className="candidate-input-form" name="list_prize" placeholder="prezzo di listino" onChange={this.handleInputChange} />
                         </div>
 				            </div>
 				            <div className="row">
