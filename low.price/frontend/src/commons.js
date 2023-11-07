@@ -1,10 +1,11 @@
 // import { trackPromise } from 'react-promise-tracker';
 
-export function executeFetchWithHeader(uri, method, headerToken, successCallbackFunction, callbackFunctionKO, body) {
-	console.log("Commons.executeFetchWithHeader - START - uri: " + uri);
-	console.log(`Commons.executeFetchWithHeader - DEBUG - body: ${body}`);
-	console.log(body);
-	console.log(`Commons.executeFetchWithHeader - DEBUG - method: ${method}  - uri: ${uri}`);
+export function executeFetchWithHeader(uri, method, headerToken, successCallbackFunction, callbackFunctionKO, 
+	body, extractListFunction, extractLabelFromItem, initialListForSelect, updateListForSelectFunctionCallback) {
+	// console.log("Commons.executeFetchWithHeader - START - uri: " + uri);
+	// console.log(`Commons.executeFetchWithHeader - DEBUG - body: ${body}`);
+	// console.log(body);
+	// console.log(`Commons.executeFetchWithHeader - DEBUG - method: ${method}  - uri: ${uri}`);
 	// trackPromise(
 		fetch(uri, {
 			method: method,
@@ -20,19 +21,37 @@ export function executeFetchWithHeader(uri, method, headerToken, successCallback
 				response => response.json().then(data => ({ status: response.status, body: data }))
 			)
 			.then((data) => {
-				console.log("Commons.executeFetchWithHeader - DEBUG - data: " + data);
+				// console.log("Commons.executeFetchWithHeader - DEBUG - data: " + data);
 				// console.log(data);
+				// console.log(data.body);
                 // console.log("aaa");
                 // console.log(data.body._embedded['unitOfMeasures']);
 				if (method === 'DELETE' && data.status === 204) {
 					successCallbackFunction(data.body);
 				} else if (data.status === 200 || data.status === 201) {
-					successCallbackFunction(data.body);
+					successCallbackFunction(data.body, extractListFunction, extractLabelFromItem, initialListForSelect, updateListForSelectFunctionCallback);
 				} else {//ERROR
 					callbackFunctionKO(data.body);
 				}
 			})
 	// );
+}
+
+export function fetchItemsFromApiSuccess (data, extractListFunction, extractLabelFromItem, initialListForSelect, updateListForSelect) {
+    console.log("fetchItemsFromApiSuccess - START");
+	let itemsFromApi = extractListFunction(data)
+    // this.setState({ itemsFromApi: itemsFromApi });
+	let itemsListForSelect = [...initialListForSelect].concat(
+	itemsFromApi.map(
+		(item) => ({
+		id: item.id, 
+		label:  extractLabelFromItem(item)
+		})
+	)
+	);
+	updateListForSelect(itemsListForSelect)
+    console.log(data);
+    console.log("fetchItemsFromApiSuccess - END");
 }
 
 export function operationError(err, errorMessage) {
@@ -43,3 +62,21 @@ export function operationError(err, errorMessage) {
 	// });
 	console.warn(err)
 }
+
+// export function fetchItemsFromApiSuccess (data) {
+//     console.log("Commons.fetchItemsFromApiSuccess - START");
+//     this.setState({ itemsFromApi: data });
+//       let itemsListForSelect = [...this.state.itemsListForSelect].concat(
+//         data.map(
+//           (item) => ({
+//             id: item.id, 
+//             label:  item.brand_name + " - " + item.store_city
+
+//           })
+//         )
+//       );
+//       this.setState({itemsListForSelect: itemsListForSelect});
+//     console.log(data);
+//     console.log("Commons.fetchItemsFromApiSuccess - END");
+//     this.setState({ itemsListForSelect: itemsListForSelect });
+// }

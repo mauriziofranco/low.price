@@ -1,6 +1,6 @@
 import React from "react";
 import ComparatorView from "./views/comparator/index.js";
-import NewProductView from "./views/product/index.js";
+import NewProductView from "./pages/new_product_introduction/index.js";
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import NoPage from "./pages/NoPage.js";

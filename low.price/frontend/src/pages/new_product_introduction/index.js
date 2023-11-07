@@ -3,11 +3,8 @@ import React, {Component} from 'react';
 import * as Commons from '../../commons.js';
 import * as Constants from '../../constants.js';
 
-// import * as Constants from '../../constants' ;
-// import './index.css';
-// import * as Commons from '../../commons.js' ;
-// import { Redirect } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
+import LowPriceDefaultSelect from '../../commons/components/default-select/index.js';
 
 export default class ProductInsertForm extends Component {
 	
@@ -22,7 +19,7 @@ export default class ProductInsertForm extends Component {
 	constructor (props) {
 		super(props);
 		// this.goBack = this.goBack.bind(this);
-		// this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
 		// this.handleSubmit = this.handleSubmit.bind(this);
 		
 		this.state = {
@@ -165,14 +162,15 @@ export default class ProductInsertForm extends Component {
 	// 	alert ("INSERIMENTO KO") ;
 	// }
 	
-  //   handleInputChange(event) {
-	//     const target = event.target;
-	//     const value = target.value;
-	//     const name = target.name;
-
-	//     this.setState({
-	//       [name]: value,    });
-	// }
+    handleInputChange(event) {
+		const target = event.target;
+		const value = target.value;
+		const name = target.name;
+		console.log("ProductInsertForm.handleInputChange - name: " + name + " - value: " + value);
+		//this.props.handleInputChange(event);
+		// this.setState({
+		//   [name]: value,    });
+	}
     
     goBack(event){
     	event.preventDefault();
@@ -185,7 +183,7 @@ export default class ProductInsertForm extends Component {
 			    {/* {this.renderRedirect()} */}
 			    <div className="panel">
 			        <div className="panel-heading">
-			           Inserisci nuovo prodotto
+			           Inserimento nuovo prodotto
 			        </div>
 			        <div className="panel-body">
 			            <form onSubmit={this.handleSubmit}>
@@ -283,37 +281,80 @@ export default class ProductInsertForm extends Component {
                             <label>Categoria di prodotto</label>
                         </div>
                         <div className="col-75">
-                          <select name="department_id" className="candidate-input-form" defaultValue={this.state.selectedDepartment_id} onChange={this.handleInputChange} required>
-                            {this.state.courseCodes.map((e, key) => {
-                              return <option key={key} value={e.code}>{e.title}</option>;
-                            })}
-                          </select>
-				                </div>
-				            </div>
+                          <LowPriceDefaultSelect 
+						      state_element_name={"department_selected_id"}
+							  onChange={this.handleInputChange} 
+							  apiUrl={Constants.DEPARTMENTS_API}
+							  initialSelectListObject={{id: 0, label: "Seleziona settore merceologico del prodotto"}}
+							  extractListFromData={
+								(data) => data['_embedded']['departments']	
+							  }
+							  extractLabelFromItem={
+								(item) => (item.label + " - " + item.description)
+							  }
+															  
+							/>
+				        </div>
+				    </div>
                     <div className="row">
                         <div className="col-25">
-                            <label>Categoria di pasto</label>
+                            <label>Pasto</label>
                         </div>
                         <div className="col-75">
-                          <select name="meal_category_id" className="candidate-input-form" defaultValue={this.state.selectedMeal_category_id} onChange={this.handleInputChange} required>
-                            {this.state.courseCodes.map((e, key) => {
-                              return <option key={key} value={e.code}>{e.title}</option>;
-                            })}
-                          </select>
-				                </div>
-				            </div>
+                          <LowPriceDefaultSelect 
+						      state_element_name={"meal_selected_id"}
+							  onChange={this.handleInputChange} 
+							  apiUrl={Constants.MEALS_API}
+							  initialSelectListObject={{id: 0, label: "Seleziona pasto"}}
+							  extractListFromData={
+								(data) => data['_embedded']['meals']	
+							  }
+							  extractLabelFromItem={
+								(item) => (item.label + " - " + item.description)
+							  }
+															  
+							/>
+				        </div>
+					</div>
+					<div className="row">
+                        <div className="col-25">
+                            <label>Tipologia di prodotto in ambito pasti</label>
+                        </div>
+                        <div className="col-75">
+                          <LowPriceDefaultSelect 
+						      state_element_name={"meal_category_selected_id"}
+							  onChange={this.handleInputChange} 
+							  apiUrl={Constants.MEAL_CATEGORIES_API}
+							  initialSelectListObject={{id: 0, label: "Seleziona tipologia di prodotto in ambito pasti"}}
+							  extractListFromData={
+								(data) => data['_embedded']['mealCategories']	
+							  }
+							  extractLabelFromItem={
+								(item) => (item.label)
+							  }
+															  
+							/>
+				        </div>
+					</div>
                     <div className="row">
                         <div className="col-25">
-                            <label>Sottocategoria di pasto</label>
+                            <label>Sottocategoria di prodotto</label>
                         </div>
                         <div className="col-75">
-                          <select name="meal_sub_category_id" className="candidate-input-form" defaultValue={this.state.selectedMeal_sub_category_id} onChange={this.handleInputChange} required>
-                            {this.state.courseCodes.map((e, key) => {
-                              return <option key={key} value={e.code}>{e.title}</option>;
-                            })}
-                          </select>
-				                </div>
-				            </div>
+						    <LowPriceDefaultSelect 
+						      state_element_name={"meal_sub_category_selected_id"}
+							  onChange={this.handleInputChange} 
+							  apiUrl={Constants.MEAL_SUB_CATEGORIES_API}
+							  initialSelectListObject={{id: 0, label: "Seleziona sotto tipologia di prodotto in ambito pasti"}}
+							  extractListFromData={
+								(data) => data['_embedded']['mealSubCategories']	
+							  }
+							  extractLabelFromItem={
+								(item) => (item.label)
+							  }
+							/>
+						</div>
+					</div>
 				            <div className="row insert-form-buttons">
 				                <Button type="submit" variant="secondary">INSERISCI</Button>
 				                &nbsp;&nbsp;&nbsp;&nbsp;
