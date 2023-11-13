@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.price.low.controller.validator.CustomErrorType;
+import com.price.low.entity.Product;
 import com.price.low.request.model.ProductCustomRequest;
 import com.price.low.response.model.ProductRecord;
 import com.price.low.service.FullProductRegistryService;
@@ -54,10 +55,10 @@ public class ProductRegistryController {
 	@PostMapping(value = "/")
 	public ResponseEntity<?> insert(@ModelAttribute ProductCustomRequest requestProduct) {
 		logger.info("insert : {}", requestProduct);
-		ProductRecord objToReturn = null ;
+		Product objToReturn = fullProductRegistryService.insert(requestProduct);
 		try {
 //			objToReturn = candidateService.createNewCandidate(requestCandidateCustom);
-			return new ResponseEntity<ProductRecord>(objToReturn, HttpStatus.CREATED);
+			return new ResponseEntity<Product>(objToReturn, HttpStatus.CREATED);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			logger.error("ERROR in inserting new candidate: ", e);

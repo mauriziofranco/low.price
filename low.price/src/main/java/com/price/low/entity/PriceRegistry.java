@@ -4,6 +4,7 @@
 package com.price.low.entity;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,19 +22,20 @@ import lombok.ToString;
  * @author maurizio.franco@ymail.com
  */
 @Entity
-@Table(name = "prize_registry")
+@Table(name = "price_registry")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class PrizeRegistry {
+public class PriceRegistry {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-	private long product_id;
-    private Double prize;
-    private Timestamp insert_datetime;
-    private Long point_of_sale_id;
+    private Long id;
+	private Long product_id;
+    private Double selling_prize;
+    private Double list_prize;
+    private LocalDateTime insert_datetime;
+    private Long store_id;
 }

@@ -23,7 +23,7 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
     }
 
 //    select * from products p
-//    JOIN prize_registry pr ON p.id = pr.product_id
+//    JOIN price_registry pr ON p.id = pr.product_id
 //     JOIN store pos ON pr.store_id = pos.store_id
 //     JOIN brand br ON pos.brand_id = br.brand_id
 //     JOIN unit_of_measure uom ON uom.id = p.unit_of_measure
@@ -31,7 +31,7 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
     public List<ProductRecord> findAllProducts() {
         return jdbcTemplate.query(
         		"select * from products p\r\n"
-        		+ "JOIN prize_registry pr ON p.id = pr.product_id\r\n"
+        		+ "JOIN price_registry pr ON p.id = pr.product_id\r\n"
         		+ "JOIN store pos ON pr.store_id = pos.store_id\r\n"
         		+ "JOIN brand br ON pos.brand_id = br.brand_id\r\n"
         		+ "JOIN unit_of_measure uom ON uom.id = p.unit_of_measure\r\n"
@@ -42,15 +42,15 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
         		        rs.getString("description"),
         		        rs.getLong("unit_of_measure"),
         		        rs.getString("unit_of_measure_label"),
-        		        rs.getLong("measure"),
+        		        rs.getDouble("measure"),
         		        rs.getLong("department_id"),
         		        rs.getLong("meal_category_id"),
         		        rs.getLong("meal_sub_category_id"),
         		        rs.getString("manufacturer_name"),
 		                rs.getString("image_file_name"),
 		                rs.getLong("product_id"),
+		                rs.getDouble("selling_prize"),
 		                rs.getDouble("list_prize"),
-		                rs.getDouble("prize"),
 		                rs.getTimestamp("insert_datetime"),
 		                rs.getLong("store_id"),
 		                rs.getString("brand_name"),
@@ -59,7 +59,7 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
     }
     
 //    select * from products p
-//    JOIN prize_registry pr ON p.id = pr.product_id
+//    JOIN price_registry pr ON p.id = pr.product_id
 //    JOIN store pos ON pr.store_id = pos.store_id
 //    JOIN brand br ON pos.brand_id = br.brand_id
 //    JOIN unit_of_measure uom ON uom.id = p.unit_of_measure
@@ -68,7 +68,7 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
   public ProductRecord findByBarcode(String barcode) {
       return jdbcTemplate.queryForObject(
       		"select * from products p\r\n"
-      		+ "JOIN prize_registry pr ON p.id = pr.product_id\r\n"
+      		+ "JOIN price_registry pr ON p.id = pr.product_id\r\n"
       		+ "JOIN store pos ON pr.store_id = pos.store_id\r\n"
       		+ "JOIN brand br ON pos.brand_id = br.brand_id\r\n"
         	+ "JOIN unit_of_measure uom ON uom.id = p.unit_of_measure\r\n"
@@ -79,19 +79,19 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
       		        rs.getString("description"),
       		        rs.getLong("unit_of_measure"),
       		        rs.getString("unit_of_measure_label"),
-      		        rs.getLong("measure"),
+      		        rs.getDouble("measure"),
       		        rs.getLong("department_id"),
       		        rs.getLong("meal_category_id"),
       		        rs.getLong("meal_sub_category_id"),
       		        rs.getString("manufacturer_name"),
-		                rs.getString("image_file_name"),
-		                rs.getLong("product_id"),
-		                rs.getDouble("list_prize"),
-		                rs.getDouble("prize"),
-		                rs.getTimestamp("insert_datetime"),
-		                rs.getLong("store_id"),
-		                rs.getString("brand_name"),
-		                rs.getString("brand_logo_image_file_name")
+	                rs.getString("image_file_name"),
+	                rs.getLong("product_id"),
+	                rs.getDouble("list_prize"),
+	                rs.getDouble("prize"),
+	                rs.getTimestamp("insert_datetime"),
+	                rs.getLong("store_id"),
+	                rs.getString("brand_name"),
+	                rs.getString("brand_logo_image_file_name")
 		        ));
   }
 	

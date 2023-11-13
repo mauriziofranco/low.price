@@ -1,5 +1,14 @@
 // import { trackPromise } from 'react-promise-tracker';
 
+export function executeFetch(uri, method, successCallbackFunction, callbackFunctionKO, body, isBodyAJSON) {
+	console.log("Commons.executeFetch - START - uri: " + uri);
+	//let token = sessionStorage.getItem('headerToken');
+	//let headerToken = getAuthorizationHeaderFromToken(token, isBodyAJSON);
+	let headerToken = null ;
+	executeFetchWithHeader(uri, method, headerToken, successCallbackFunction, callbackFunctionKO, body)
+
+}
+
 export function executeFetchWithHeader(uri, method, headerToken, successCallbackFunction, callbackFunctionKO, 
 	body, extractListFunction, extractLabelFromItem, initialListForSelect, updateListForSelectFunctionCallback) {
 	// console.log("Commons.executeFetchWithHeader - START - uri: " + uri);
@@ -18,11 +27,13 @@ export function executeFetchWithHeader(uri, method, headerToken, successCallback
             //     console.log(response);
             //   }
 			.then(
-				response => response.json().then(data => ({ status: response.status, body: data }))
-			)
+				(response) => (
+					response.json().then(data => ({ status: response.status, body: data }))
+					
+				))
 			.then((data) => {
 				// console.log("Commons.executeFetchWithHeader - DEBUG - data: " + data);
-				// console.log(data);
+				console.log(data);
 				// console.log(data.body);
                 // console.log("aaa");
                 // console.log(data.body._embedded['unitOfMeasures']);

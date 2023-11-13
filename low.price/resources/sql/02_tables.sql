@@ -1,4 +1,4 @@
-drop table if exists prize_registry;
+drop table if exists price_registry;
 drop table if exists store;
 drop table if exists brand;
 drop table if exists products;
@@ -242,10 +242,10 @@ insert into products
   ;
  
 
-create table prize_registry (
+create table price_registry (
     id bigint not null AUTO_INCREMENT,
     product_id bigint not null, 
-    prize double not null,
+    selling_prize double not null,
     list_prize double,
     insert_datetime datetime not null,
     store_id bigint not null,
@@ -256,7 +256,7 @@ create table prize_registry (
 );
 
 
-insert into prize_registry (id, product_id, prize, list_prize, insert_datetime, store_id) VALUES
+insert into price_registry (id, product_id, selling_prize, list_prize, insert_datetime, store_id) VALUES
              ( 1,  1, 2.39, 2.39, '2023-10-02 13:45:00', 1),
              ( 2,  2, 2.39, 2.39, '2023-10-04 09:35:00', 2),
              ( 3,  3, 3.49, 3.49, '2023-10-18 08:38:00', 2),

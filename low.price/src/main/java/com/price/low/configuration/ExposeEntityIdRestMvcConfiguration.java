@@ -28,5 +28,6 @@ public class ExposeEntityIdRestMvcConfiguration implements RepositoryRestConfigu
 		config.exposeIdsFor(MealCategory.class);
 		config.exposeIdsFor(MealSubCategory.class);
 		config.exposeIdsFor(UnitOfMeasure.class);
+//		config.exposeIdsFor(Store.class);
 	}
 }

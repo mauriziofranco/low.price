@@ -3,18 +3,8 @@
  */
 package com.price.low.request.model;
 
-import java.util.Date;
-
 import org.springframework.web.multipart.MultipartFile;
 
-import com.price.low.entity.Department;
-
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,7 +24,26 @@ import lombok.ToString;
 @ToString
 public class ProductCustomRequest {
 
-	private String product_name ;
+	protected Long barcode_number;
+	protected String product_name;
+	protected String product_description;
+	protected String manufacturer_name;
+	protected Long unit_of_measure;
+	protected Long measure;
+	protected Long store_id;
+	protected Double selling_prize;
+	protected Double list_prize ;
+	protected Long department_id ;
+	protected Long meal_id ;
+	protected Long meal_category_id ;
+	protected Long meal_sub_category_id ;
+	protected String product_insert_datetime ;
+	
+	private MultipartFile[] files ;
+	
+//	protected String product_image_file_name;
+	
+//	private String product_name ;
 //		@NotBlank(message = "Name may not be Blank")
 //		@Size(max = 50, min =2 )
 //		protected String firstname;
