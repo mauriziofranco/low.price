@@ -43,9 +43,10 @@ public class BarcodeController {
 	public ResponseEntity<ProductRecord> getProductInfoPerBarcode(@PathVariable("barcode") final String barcode) {
 
 			Optional<ProductRecord> optionalItem = fullProductRegistryService.getByBarcode(barcode);
-			if (optionalItem.isPresent())
+			if (optionalItem.isPresent()) {
+				logger.info("getProductInfoPerBarcode - DEBUG - research for barcode: {}, found:{}", barcode, optionalItem.get());
 				return new ResponseEntity<>(optionalItem.get(), HttpStatus.OK);
-			else
+			} else
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 	

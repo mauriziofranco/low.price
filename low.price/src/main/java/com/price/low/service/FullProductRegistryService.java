@@ -68,16 +68,22 @@ public class FullProductRegistryService {
 //		Optional<ProductRecord> optionalItem = Optional.ofNullable(productRecordRepository.findByBarcode(barcode));
 		Optional<ProductRecord> optionalItem ;
 		try {
+			logger.info("getByBarcode - DEBUG - looking for product in internal database: {}", barcode);
 			optionalItem = Optional.ofNullable(productRecordRepository.findByBarcode(barcode));
+			logger.info("getByBarcode - DEBUG - looking for product in internal database: {}, found: {}", barcode, optionalItem.isPresent());
 		} catch (Exception e) {
 			logger.error("getByBarcode - ERROR in looking for product with barcode: {}, NO PRODUCT WITH THIS BARCODE IN OUR DATABASE.", barcode);
+			e.printStackTrace();
 			optionalItem = Optional.ofNullable(null);
 		}
 		if (optionalItem.isEmpty()) {
 			optionalItem = Optional.ofNullable(productDetailsWWWFinderService.findByBarcode(barcode));
+			logger.info("getByBarcode - END - returning from www.... found something: {}", optionalItem.isPresent());
+			return optionalItem;
+		} else {
+			logger.info("getByBarcode - END - returning from internal research... found something: {}", optionalItem.isPresent());
+			return optionalItem;			
 		}
-		logger.info("getByBarcode - END - finded something: {}", optionalItem.isPresent());
-		return optionalItem;
 	}
 	
 	/**

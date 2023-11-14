@@ -10,52 +10,50 @@ export function executeFetch(uri, method, successCallbackFunction, callbackFunct
 }
 
 export function executeFetchWithHeader(uri, method, headerToken, successCallbackFunction, callbackFunctionKO, 
-	body, extractListFunction, extractLabelFromItem, initialListForSelect, updateListForSelectFunctionCallback) {
+	body, extractListFunction, extractLabelFromItem, initialListForSelect, updateListForSelectFunctionCallback, extractIdFromItem) {
 	// console.log("Commons.executeFetchWithHeader - START - uri: " + uri);
 	// console.log(`Commons.executeFetchWithHeader - DEBUG - body: ${body}`);
 	// console.log(body);
 	// console.log(`Commons.executeFetchWithHeader - DEBUG - method: ${method}  - uri: ${uri}`);
-	// trackPromise(
-		fetch(uri, {
-			method: method,
-			body: body
-            ,
+	fetch(uri, {
+		method: method,
+		body: body
+		,
 
-			// headers: headerToken
+		// headers: headerToken
+	})
+		//   .then((response) => {
+		//     console.log(response);
+		//   })
+		.then(
+			(response) => (
+				response.json().then(data => ({ status: response.status, body: data }))
+				
+			))
+		.then((data) => {
+			// console.log("Commons.executeFetchWithHeader - DEBUG - data: " + data);
+			console.log(data);
+			// console.log(data.body);
+			// console.log("aaa");
+			// console.log(data.body._embedded['unitOfMeasures']);
+			if (method === 'DELETE' && data.status === 204) {
+				successCallbackFunction(data.body);
+			} else if (data.status === 200 || data.status === 201) {
+				successCallbackFunction(data.body, extractListFunction, extractLabelFromItem, initialListForSelect, updateListForSelectFunctionCallback, extractIdFromItem);
+			} else {
+				callbackFunctionKO(data.body);
+			}
 		})
-			//   .then((response) => {
-            //     console.log(response);
-            //   }
-			.then(
-				(response) => (
-					response.json().then(data => ({ status: response.status, body: data }))
-					
-				))
-			.then((data) => {
-				// console.log("Commons.executeFetchWithHeader - DEBUG - data: " + data);
-				console.log(data);
-				// console.log(data.body);
-                // console.log("aaa");
-                // console.log(data.body._embedded['unitOfMeasures']);
-				if (method === 'DELETE' && data.status === 204) {
-					successCallbackFunction(data.body);
-				} else if (data.status === 200 || data.status === 201) {
-					successCallbackFunction(data.body, extractListFunction, extractLabelFromItem, initialListForSelect, updateListForSelectFunctionCallback);
-				} else {//ERROR
-					callbackFunctionKO(data.body);
-				}
-			})
-	// );
 }
 
-export function fetchItemsFromApiSuccess (data, extractListFunction, extractLabelFromItem, initialListForSelect, updateListForSelect) {
+export function fetchItemsFromApiSuccess (data, extractListFunction, extractLabelFromItem, initialListForSelect, updateListForSelect, extractIdFromItem) {
     // console.log("fetchItemsFromApiSuccess - START");
 	let itemsFromApi = extractListFunction(data)
     // this.setState({ itemsFromApi: itemsFromApi });
 	let itemsListForSelect = [...initialListForSelect].concat(
 	itemsFromApi.map(
 		(item) => ({
-		id: item.id, 
+		id: extractIdFromItem(item), 
 		label:  extractLabelFromItem(item)
 		})
 	)

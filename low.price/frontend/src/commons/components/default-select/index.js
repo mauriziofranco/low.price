@@ -20,6 +20,7 @@ export default class LowPriceDefaultSelect extends Component {
 		    ],
 			extractListFromData: this.props.extractListFromData,
 			extractLabelFromItem: this.props.extractLabelFromItem,
+			extractIdFromItem: this.props.extractIdFromItem,
 			selectedItemId: 0,
 		}
 	}
@@ -34,46 +35,23 @@ export default class LowPriceDefaultSelect extends Component {
 										this.state.extractListFromData, 
 										this.state.extractLabelFromItem, 
 										this.state.itemsListForSelect, 
-										this.updateListForSelect
+										this.updateListForSelect,
+										this.state.extractIdFromItem
 									  );
   }
-
-//   fetchItemsFromApiSuccess = (data, extractListFunction, extractLabelFromItem, updateListForSelect) => {
-//     console.log("fetchItemsFromApiSuccess - START");
-// 	let itemsFromApi = extractListFunction(data)
-//     // this.setState({ itemsFromApi: itemsFromApi });
-// 	let itemsListForSelect = [...this.state.itemsListForSelect].concat(
-// 	itemsFromApi.map(
-// 		(item) => ({
-// 		id: item.id, 
-// 		label:  extractLabelFromItem(item)
-// 		})
-// 	)
-// 	);
-// 	updateListForSelect(itemsListForSelect)
-//     console.log(data);
-//     console.log("fetchItemsFromApiSuccess - END");
-// }
 
 updateListForSelect = (list) => {
     this.setState({itemsListForSelect: list});
 }
 
-// handleInputChange(event) {
-// 	const target = event.target;
-// 	const value = target.value;
-// 	const name = target.name;
-//     console.log("ProductCategoriesSelect.handleInputChange - name: " + name + " - value: " + value);
-// 	this.props.onChange(event);
-// 	// this.setState({
-// 	//   [name]: value,    });
-// }
-	
 	render () {
 		return (
-			<select name={this.state.state_element_name} defaultValue={this.state.selectedItemId} onChange={this.props.onChange}>
+			// <select name={this.state.state_element_name} defaultValue={this.state.selectedItemId} onChange={this.props.onChange}>
+			<select name={this.state.state_element_name} value={this.props.value}  onChange={this.props.onChange}>
+				{/* <select name={this.state.state_element_name} defaultValue={this.state.itemsListForSelect.filter(element => element.id===this.state.value)[0]} onChange={this.props.onChange}></select> */}
 			{this.state.itemsListForSelect.map((e, key) => {
-				return <option key={key} value={e.id}>{e.label}</option>;
+				// return <option key={key} value={e.id} selected={e.id===this.state.value}>{e.label}</option>;
+				return <option key={key} value={e.id} >{e.label}</option>;
 			})}
 			</select>
 		);

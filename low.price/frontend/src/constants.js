@@ -13,3 +13,5 @@ export const PRODUCTS_API = BACKEND_API_PREFIX + '/api/products' ;
 
 export const FULL_PRODUCTS_API = BACKEND_API_PREFIX + '/api/v1/products/' ;
 export const FULL_STORES_API = BACKEND_API_PREFIX + '/api/v1/stores/' ;
+export const CUSTOM_BARCODE_API = BACKEND_API_PREFIX + '/api/v1/barcode/' ;
+
