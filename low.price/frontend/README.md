@@ -1,6 +1,8 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+##COMMANDS TO EXECUTE BEFORE START DEVELOPMENT
+#MAP IMAGES FOLDER INTO FRONTEND
+LINUX: 
+example: ln -s </target-directory/target-file> </symlink-directory/example-symlink>
+ln -s /home/maurizio/lowprice/images /home/maurizio/git/low.price100/low.price/frontend/public/images
 
 ## Available Scripts
 

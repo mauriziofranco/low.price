@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +41,7 @@ public class ProductRegistryController {
 	@Autowired
 	private FullProductRegistryService fullProductRegistryService ;
 
+	@CrossOrigin
 	@GetMapping("/")
 	public ResponseEntity<List<ProductRecord>> getItems() {
 		List<ProductRecord> items = fullProductRegistryService.getAll();
@@ -61,8 +63,8 @@ public class ProductRegistryController {
 			return new ResponseEntity<Product>(objToReturn, HttpStatus.CREATED);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			logger.error("ERROR in inserting new candidate: ", e);
-			return new ResponseEntity<CustomErrorType>(new CustomErrorType("Unable to insert new product: " + requestProduct)  , HttpStatus.BAD_REQUEST);
+			logger.error("ERROR in inserting new ProductCustomRequest: ", e);
+			return new ResponseEntity<CustomErrorType>(new CustomErrorType("Unable to insert new ProductCustomRequest: " + requestProduct)  , HttpStatus.BAD_REQUEST);
 		}
 	}	
 	

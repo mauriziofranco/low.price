@@ -15,9 +15,7 @@ export default class LowPriceDefaultSelect extends Component {
 		    state_element_name: this.props.state_element_name,
 			apiUrl: this.props.apiUrl,
 			// itemsFromApi: [],
-			itemsListForSelect: [
-				this.props.initialSelectListObject
-		    ],
+			itemsListForSelect: this.props.initialSelectListObject,
 			extractListFromData: this.props.extractListFromData,
 			extractLabelFromItem: this.props.extractLabelFromItem,
 			extractIdFromItem: this.props.extractIdFromItem,

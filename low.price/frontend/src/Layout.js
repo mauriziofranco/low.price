@@ -7,9 +7,10 @@ const Layout = () => {
     <>
       <nav>
         <ul>
-          {/* <li>
-            <Link to="/">Home</Link>
+          <li>
+            <Link to="/home">Home</Link>
           </li>
+          {/* 
           <li>
             <Link to="/blogs">Blogs</Link>
           </li>
@@ -17,10 +18,13 @@ const Layout = () => {
             <Link to="/contact">Contact</Link>
           </li> */}
           <li>
-            <Link to="/product/new">Register new product</Link>
+            <Link to="/product/new">Inserisci un nuovo prodotto(CON PREZZO)</Link>
           </li>
           <li>
-            <Link to="/product/comparator">Products Comparator</Link>
+            <Link to="/price/new">Inserisci un nuovo prezzo(PER UN PRODOTTO GIA' CENSITO)</Link>
+          </li>
+          <li>
+            <Link to="/product/comparator">COMPARATORE PREZZI</Link>
           </li>
         </ul>
       </nav>

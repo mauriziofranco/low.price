@@ -38,4 +38,12 @@ public class PriceRegistry {
     private Double list_prize;
     private LocalDateTime insert_datetime;
     private Long store_id;
+    
+    public PriceRegistry (Long product_id, Double selling_prize, Double list_prize, LocalDateTime insert_datetime, Long store_id) {
+    	this.product_id=product_id;
+    	this.selling_prize=selling_prize;
+    	this.list_prize=list_prize;
+    	this.insert_datetime=insert_datetime;
+    	this.store_id=store_id;
+    }
 }

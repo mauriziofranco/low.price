@@ -5,46 +5,59 @@ import * as Constants from '../../constants.js';
 
 import { Button } from 'react-bootstrap';
 import LowPriceDefaultSelect from '../../commons/components/default-select/index.js';
+import BarcodeDiv from './components/commons/barcode_section/index.js';
+
+import './index.css';
 
 export default class ProductInsertForm extends Component {
 	
 	componentDidMount() {			
-		// this.fetchUnitsOfMeasure();
-        this.fetchStores();
-		this.initializeInsertDateTime();
-		// this.fetchCourseCodes.bind(this);
-		// this.fetchCourseCodes();
-		
-      }
+	    this.initializeInsertDateTime();
+    }
 	
 	constructor (props) {
 		super(props);
 		// this.goBack = this.goBack.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.initializeProductStateProperties = this.initializeProductStateProperties.bind(this);
 		
 		this.state = {
-            product_name: 'aaa',
+			barcode_number: 8017596002617,
+            product_name: '',
+			product_description: '',
+			manufacturer_name: '',
+			unit_of_measure: '', 
+			measure: '',
+			store_id: '', 
+			selling_prize: '',
+			list_prize: '',
+			department_id: '',
+			product_insert_datetime: '',
+			meal_id: '',
+			meal_category_id: '',
+			meal_sub_category_id: '',
 
-        // unitsOfMeasureFromApi: [],
-        // unitsOfMeasureListForSelect: [{
-        //   id: 0,
-        //   label:
-        //     "Seleziona un'unità di misura",
-        // }],
-        // selectedUnitOfMeasureId: 0,
-        storesFromApi: [],
-        storesListForSelect: [{
-          id: 0,
-          label:
-            "Seleziona un punto vendita",
-        }],
-        selectedStoreId: 0,
-		}
-		
-		// this.loggedUserId = Commons.getUserLoggedId() ;
+			imgPreviewSrc: null
 	}
-	
+
+}
+
+	initializeProductStateProperties = (product) => {
+		const inputProduct = {...product} ;
+        // this.setState(
+		// 	{
+		// 	product_name: product.product_name
+		// }
+		// )
+		this.setState(
+			inputProduct
+		);
+		this.setState(
+			{ imgPreviewSrc: inputProduct.full_path_image_file_name}
+		);
+		// this.initializeInsertDateTime();
+	}
 	// redirectToCandidatesList = () => {
 	//     this.setState({
 	//       redirect: true
@@ -82,9 +95,9 @@ export default class ProductInsertForm extends Component {
 //     Commons.executeFetchWithHeader(Constants.UNITS_OF_MEASURE_API, "GET", null, this.fetchUnitsOfMeasureSuccess, Commons.operationError, null);
 //   }
 
-  fetchStores = () =>{
-    Commons.executeFetchWithHeader(Constants.FULL_STORES_API, "GET", null, this.fetchStoresSuccess, Commons.operationError, null);
-  }
+//   fetchStores = () =>{
+//     Commons.executeFetchWithHeader(Constants.FULL_STORES_API, "GET", null, this.fetchStoresSuccess, Commons.operationError, null);
+//   }
   
 
 //   fetchUnitsOfMeasureSuccess = (data) => {
@@ -102,32 +115,32 @@ export default class ProductInsertForm extends Component {
       
 //   }
 
-  fetchStoresSuccess = (data) => {
-    // console.log("fetchStoresSuccess - START");
-    this.setState({ storesFromApi: data });
-      let storesListForSelect = [...this.state.storesListForSelect].concat(
-        data.map(
-          (item) => ({
-            id: item.store_id, 
-            label:  item.brand_name + " - " + item.store_city
+//   fetchStoresSuccess = (data) => {
+//     // console.log("fetchStoresSuccess - START");
+//     this.setState({ storesFromApi: data });
+//       let storesListForSelect = [...this.state.storesListForSelect].concat(
+//         data.map(
+//           (item) => ({
+//             id: item.store_id, 
+//             label:  item.brand_name + " - " + item.store_city
 
-          })
-        )
-      );
+//           })
+//         )
+//       );
 
-	  console.log("storesListForSelect: ", storesListForSelect);
-      this.setState({storesListForSelect: storesListForSelect});
-    // console.log(data);
-    // console.log(data);
-    // console.log("fetchStoresSuccess - END");
-    this.setState({ storesListForSelect: storesListForSelect });
-}
+// 	  console.log("storesListForSelect: ", storesListForSelect);
+//       this.setState({storesListForSelect: storesListForSelect});
+//     // console.log(data);
+//     // console.log(data);
+//     // console.log("fetchStoresSuccess - END");
+//     this.setState({ storesListForSelect: storesListForSelect });
+// }
 	
 	// setCourseCodes = (responseData) => {
 	// 	this.setState({ courseCodes: responseData });
 	// }
 	  
-	  handleSubmit(event) {
+	  handleSubmit = (event) =>  {
 	    console.log(this.state);
 	    event.preventDefault();
 	    this.sendInsertRequest();
@@ -172,7 +185,7 @@ export default class ProductInsertForm extends Component {
 		console.log ("INSERIMENTO OK") ;
 	}
 	
-    handleInputChange(event) {
+    handleInputChange = (event) => {
 		const target = event.target;
 		const value = target.value;
 		const name = target.name;
@@ -182,12 +195,26 @@ export default class ProductInsertForm extends Component {
 		  [name]: value,    });
 	}
     
-    goBack(event){
+	onChangeProductImage = (event) => {
+        console.log("ProductInsertForm.onChangeProductImage -");
+		var file = this.refs.file.files[0];
+		var reader = new FileReader();
+		var url = reader.readAsDataURL(file);
+
+		reader.onloadend = function (e) {
+			this.setState({
+				imgPreviewSrc: [reader.result]
+			})
+			}.bind(this);
+		console.log(url);
+	}
+
+    goBack = (event) => {
     	event.preventDefault();
         this.props.history.goBack();
     }
 	
-	render () {
+	render = () => {
 		return (
 			<div className="panel-container">
 			    {/* {this.renderRedirect()} */}
@@ -196,195 +223,227 @@ export default class ProductInsertForm extends Component {
 			           Inserimento nuovo prodotto
 			        </div>
 			        <div className="panel-body">
-			            <form onSubmit={this.handleSubmit}>
-				            <div className="row">
-                        <div className="col-25">
-                            <label>Codice a barre</label>
-                        </div>
-                        <div className="col-75">
-                            <input type="number" className="candidate-input-form" name="barcode_number" placeholder="codice a barre" onChange={this.handleInputChange} />
-                        </div>
-				            </div>
-				            <div className="row">
-				                <div className="col-25">
-				                    <label >Etichetta/Nome prodotto</label>
-				                </div>
-				                <div className="col-75">
-				                    <input type="text" className="candidate-input-form" name="product_name" value={this.state.product_name} placeholder="nome prodotto" onChange={this.handleInputChange} />
-				                </div>
-				            </div>
-				            <div className="row">
-				                <div className="col-25">
-				                    <label>Descrizione prodotto</label>
-				                </div>
-				                <div className="col-75">
-				                    <input type="text" className="candidate-input-form" name="product_description" placeholder="descrizione prodotto" onChange={this.handleInputChange} />
-				                </div>
-				            </div>
-                    <div className="row">
-				                <div className="col-25">
-				                    <label>Denominazione produttore</label>
-				                </div>
-				                <div className="col-75">
-				                    <input type="text" className="candidate-input-form" name="manufacturer_name" placeholder="denominazione produttore" onChange={this.handleInputChange} />
-				                </div>
-				            </div>
-				            <div className="row">
-				                <div className="col-25">
-				                    <label>Unità di misura della quantità</label>
-				              </div>
-				              <div className="col-75">
-					              {/* <select name="unit_of_measure" className="candidate-input-form" defaultValue={this.state.selectedUnitOfMeasureId} onChange={this.handleInputChange} >
-							        {this.state.unitsOfMeasureListForSelect.map((e, key) => {
-							        	return <option key={key} value={e.id}>{e.label}</option>;
-							        })}
-						          </select> */}
-								  <LowPriceDefaultSelect 
-										state_element_name={"unit_of_measure"}
-										onChange={this.handleInputChange} 
-										apiUrl={Constants.UNITS_OF_MEASURE_API}
-										initialSelectListObject={{id: 0, label: "Seleziona un'unità di misura"}}
-										extractListFromData={
-											(data) => data['_embedded']['unitOfMeasures']	
-										}
-										extractLabelFromItem={
-											(item) => (item.unit_of_measure_label + (item.description!=null?(" - ("+item.description+")"):"")) 
-										}
-																		
-										/>
-				              </div>
-				            </div>
-                    <div className="row">
-                        <div className="col-25">
-                            <label>Quantità(peso, confezioni, misura)</label>
-                        </div>
-                        <div className="col-75">
-                            <input type="number" className="candidate-input-form" name="measure" placeholder="quantità" onChange={this.handleInputChange} />
-                        </div>
-				            </div>
+			            <form onSubmit={this.handleSubmit} >
+				            <BarcodeDiv 
+							    onChange={this.handleInputChange} 
+								value={this.state.barcode_number} 
+								barcode_number_state_property_id={"barcode_number"}
+								initializeProductFunction={this.initializeProductStateProperties}
+							/>
+							<div className="productDetails">
+								<div>
+									<div>
+										<label >Etichetta/Nome prodotto</label>
+									</div>
+									<div>
+										<input type="text" name="product_name" value={this.state.product_name} placeholder="nome prodotto" onChange={this.handleInputChange} />
+									</div>
+								</div>
+								<div>
+									<div>
+										<label>Descrizione prodotto</label>
+									</div>
+									<div>
+										<input type="text" name="product_description" value={this.state.product_description} placeholder="descrizione prodotto" onChange={this.handleInputChange} />
+									</div>
+								</div>
+								<div>
+									<div>
+										<label>Denominazione produttore</label>
+									</div>
+									<div>
+										<input type="text" name="manufacturer_name" value={this.state.manufacturer_name} placeholder="denominazione produttore" onChange={this.handleInputChange} />
+									</div>
+								</div>
+								<div>
+									<div>
+										<label>Unità di misura della quantità</label>
+									</div>
+									<div>
+										<LowPriceDefaultSelect 
+												state_element_name={"unit_of_measure"}
+												onChange={this.handleInputChange} 
+												apiUrl={Constants.UNITS_OF_MEASURE_API}
+												initialSelectListObject={{id: 0, label: "Seleziona un'unità di misura"}}
+												value={this.state.unit_of_measure}
+												extractListFromData={
+													(data) => data['_embedded']['unitOfMeasures']	
+												}
+												extractLabelFromItem={
+													(item) => (item.unit_of_measure_label + (item.description!=null?(" - ("+item.description+")"):"")) 
+												}
+												extractIdFromItem={
+													(item) => (item.id)
+												}							
+												/>
+									</div>
+								</div>
+								<div>
+									<div>
+										<label>Quantità(peso, confezioni, misura)</label>
+									</div>
+									<div>
+										<input type="number" name="measure" value={this.state.measure} placeholder="quantità" onChange={this.handleInputChange} />
+									</div>
+										</div>
+								
+								<div>
+							</div>
+						<div>
+							<div>
+								<label>Categoria di prodotto</label>
+							</div>
+							<div>
+							<LowPriceDefaultSelect 
+								state_element_name={"department_id"}
+								onChange={this.handleInputChange} 
+								apiUrl={Constants.DEPARTMENTS_API}
+								value={this.state.department_id}
+								initialSelectListObject={{id: 0, label: "Seleziona settore merceologico del prodotto"}}
+								extractListFromData={
+									(data) => data['_embedded']['departments']	
+								}
+								extractLabelFromItem={
+									(item) => (item.label + " - " + item.description)
+								}
+								extractIdFromItem={
+									(item) => (item.id)
+								}								  
+								/>
+							</div>
+						</div>
+						<div>
+							<div>
+								<label>Pasto</label>
+							</div>
+							<div>
+							<LowPriceDefaultSelect 
+								state_element_name={"meal_id"}
+								onChange={this.handleInputChange} 
+								apiUrl={Constants.MEALS_API}
+								value={this.state.meal_id}
+								initialSelectListObject={{id: 0, label: "Seleziona pasto"}}
+								extractListFromData={
+									(data) => data['_embedded']['meals']	
+								}
+								extractLabelFromItem={
+									(item) => (item.label + " - " + item.description)
+								}
+								extractIdFromItem={
+									(item) => (item.id)
+								}								  
+								/>
+							</div>
+						</div>
+						<div>
+							<div>
+								<label>Tipologia di prodotto in ambito pasti</label>
+							</div>
+							<div>
+							<LowPriceDefaultSelect 
+								state_element_name={"meal_category_id"}
+								onChange={this.handleInputChange} 
+								apiUrl={Constants.MEAL_CATEGORIES_API}
+								value={this.state.meal_category_id}
+								initialSelectListObject={{id: 0, label: "Seleziona tipologia di prodotto in ambito pasti"}}
+								extractListFromData={
+									(data) => data['_embedded']['mealCategories']	
+								}
+								extractLabelFromItem={
+									(item) => (item.label)
+								}
+								extractIdFromItem={
+									(item) => (item.id)
+								}									  
+								/>
+							</div>
+						</div>
+						<div>
+							<div>
+								<label>Sottocategoria di prodotto</label>
+							</div>
+							<div>
+								<LowPriceDefaultSelect 
+								state_element_name={"meal_sub_category_id"}
+								onChange={this.handleInputChange} 
+								apiUrl={Constants.MEAL_SUB_CATEGORIES_API}
+								value={this.state.meal_sub_category_id}
+								initialSelectListObject={{id: 0, label: "Seleziona sotto tipologia di prodotto in ambito pasti"}}
+								extractListFromData={
+									(data) => data['_embedded']['mealSubCategories']	
+								}
+								extractLabelFromItem={
+									(item) => (item.label)
+								}
+								extractIdFromItem={
+									(item) => (item.id)
+								}	
+								/>
+							</div>
+						</div>
+						<div>
+							<div>
+								<label>Immagine del prodotto(.png,.jpeg,.gif,.jpg)</label>
+							</div>
+							<div className="col-50">
+								<input type="file" id="product_image_file_name" ref="file" onChange={this.onChangeProductImage} accept=".png,.jpeg,.gif,.jpg" />
+							</div>
+							<div>
+								<img src={this.state.imgPreviewSrc} />
+							</div>
+						</div>
+					</div>
                     
-                    <div className="row">
-                        <div className="col-25">
+					<div>
+					    <div>
                             <label>Punto vendita</label>
                         </div>
-                        <div className="col-75">
-                          <select name="store_id" className="candidate-input-form" defaultValue={this.state.selectedStoreId} onChange={this.handleInputChange} >
-                            {this.state.storesListForSelect.map((e, key) => {
-                              return <option key={key} value={e.id}>{e.label}</option>;
-                            })}
-                          </select>
-				                </div>
-				            </div>
-                    <div className="row">
-                        <div className="col-25">
-                            <label>Prezzo a cui il prodotto è in vendita(al momento dell'acquisto)</label>
-                        </div>
-                        <div className="col-75">
-                            <input type="number" min="0.00" max="10000.00" step="0.01" className="candidate-input-form" name="selling_prize" placeholder="prezzo di vendità" onChange={this.handleInputChange} />
-                        </div>
-				            </div>
-                    <div className="row">
-                        <div className="col-25">
-                            <label>Prezzo di listino</label>
-                        </div>
-                        <div className="col-75">
-                            <input type="number" min="0.00" max="10000.00" step="0.01" className="candidate-input-form" name="list_prize" placeholder="prezzo di listino" onChange={this.handleInputChange} />
-                        </div>
-				            </div>
-				            <div className="row">
-				                <div className="col-25">
-				                    <label>Immagine del prodotto(.png,.jpeg,.gif,.jpg)</label>
-				                </div>
-				                <div className="col-75">
-				                    <input type="file" id="product_image_file_name" accept=".png,.jpeg,.gif,.jpg" />
-				                </div>
-				            </div>
-                    <div className="row">
-                        <div className="col-25">
-                            <label>Categoria di prodotto</label>
-                        </div>
-                        <div className="col-75">
-                          <LowPriceDefaultSelect 
-						      state_element_name={"department_id"}
-							  onChange={this.handleInputChange} 
-							  apiUrl={Constants.DEPARTMENTS_API}
-							  initialSelectListObject={{id: 0, label: "Seleziona settore merceologico del prodotto"}}
-							  extractListFromData={
-								(data) => data['_embedded']['departments']	
-							  }
-							  extractLabelFromItem={
-								(item) => (item.label + " - " + item.description)
-							  }
-															  
-							/>
-				        </div>
-				    </div>
-                    <div className="row">
-                        <div className="col-25">
-                            <label>Pasto</label>
-                        </div>
-                        <div className="col-75">
-                          <LowPriceDefaultSelect 
-						      state_element_name={"meal_id"}
-							  onChange={this.handleInputChange} 
-							  apiUrl={Constants.MEALS_API}
-							  initialSelectListObject={{id: 0, label: "Seleziona pasto"}}
-							  extractListFromData={
-								(data) => data['_embedded']['meals']	
-							  }
-							  extractLabelFromItem={
-								(item) => (item.label + " - " + item.description)
-							  }
-															  
-							/>
-				        </div>
-					</div>
-					<div className="row">
-                        <div className="col-25">
-                            <label>Tipologia di prodotto in ambito pasti</label>
-                        </div>
-                        <div className="col-75">
-                          <LowPriceDefaultSelect 
-						      state_element_name={"meal_category_id"}
-							  onChange={this.handleInputChange} 
-							  apiUrl={Constants.MEAL_CATEGORIES_API}
-							  initialSelectListObject={{id: 0, label: "Seleziona tipologia di prodotto in ambito pasti"}}
-							  extractListFromData={
-								(data) => data['_embedded']['mealCategories']	
-							  }
-							  extractLabelFromItem={
-								(item) => (item.label)
-							  }
-															  
-							/>
-				        </div>
-					</div>
-                    <div className="row">
-                        <div className="col-25">
-                            <label>Sottocategoria di prodotto</label>
-                        </div>
-                        <div className="col-75">
-						    <LowPriceDefaultSelect 
-						      state_element_name={"meal_sub_category_id"}
-							  onChange={this.handleInputChange} 
-							  apiUrl={Constants.MEAL_SUB_CATEGORIES_API}
-							  initialSelectListObject={{id: 0, label: "Seleziona sotto tipologia di prodotto in ambito pasti"}}
-							  extractListFromData={
-								(data) => data['_embedded']['mealSubCategories']	
-							  }
-							  extractLabelFromItem={
-								(item) => (item.label)
-							  }
+                        <div>
+						  <LowPriceDefaultSelect 
+							state_element_name={"store_id"}
+							onChange={this.handleInputChange} 
+							apiUrl={Constants.FULL_STORES_API}
+							initialSelectListObject={{id: 0, label: "Seleziona un punto vendita"}}
+							value={this.state.store_id}
+							extractListFromData={
+								(data) => data	
+							}
+							extractLabelFromItem={
+								(item) => (item.brand_name + " - " + item.store_city)
+							}
+							extractIdFromItem={
+								(item) => (item.store_id)
+							}
+															
 							/>
 						</div>
 					</div>
-					<div className="row">
-                        <div className="col-25">
+					<div>
+                        <div>
+                            <label>Prezzo di vendita</label>
+                        </div>
+                        <div>
+                            <input type="number" min="0.00" max="10000.00" step="0.01" value={this.state.selling_prize}  name="selling_prize" placeholder="prezzo di vendità" onChange={this.handleInputChange} />
+                        </div>
+				    </div>
+                    <div>
+                        <div>
+                            <label>Prezzo di listino</label>
+                        </div>
+                        <div>
+                            <input type="number" min="0.00" max="10000.00" step="0.01" name="list_prize" value={this.state.list_prize} placeholder="prezzo di listino" onChange={this.handleInputChange} />
+                        </div>
+				            </div>
+				            
+                    
+					<div>
+                        <div>
                             <label>Momento in cui hai acquistato/censito il prezzo</label>
                         </div>
-                        <div className="col-75">
+                        <div>
                             <input type="datetime-local" name="product_insert_datetime" 
 							defaultValue={this.state.product_insert_datetime} 
+							// value={this.state.product_insert_datetime}
 							onChange={this.handleInputChange} />
                         </div>
 					</div>
@@ -399,4 +458,5 @@ export default class ProductInsertForm extends Component {
 	        </div>
 		);
 	}
+    
 }

@@ -3,6 +3,7 @@ package com.price.low.repository.custom;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,9 @@ import com.price.low.response.model.ProductRecord;
  */
 @Repository
 public class ProductRecordRepositoryImpl implements ProductRecordRepository {
+	
+	@Value("${product.img.relative.path}")
+	private String product_img_relative_path ;
 	
 	private final JdbcTemplate jdbcTemplate;
 
@@ -44,10 +48,12 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
         		        rs.getString("unit_of_measure_label"),
         		        rs.getDouble("measure"),
         		        rs.getLong("department_id"),
+        		        rs.getLong("meal_id"),
         		        rs.getLong("meal_category_id"),
         		        rs.getLong("meal_sub_category_id"),
         		        rs.getString("manufacturer_name"),
 		                rs.getString("image_file_name"),
+		                product_img_relative_path + rs.getString("image_file_name"),
 		                rs.getLong("product_id"),
 		                rs.getDouble("selling_prize"),
 		                rs.getDouble("list_prize"),
@@ -81,10 +87,12 @@ public class ProductRecordRepositoryImpl implements ProductRecordRepository {
       		        rs.getString("unit_of_measure_label"),
       		        rs.getDouble("measure"),
       		        rs.getLong("department_id"),
+    		        rs.getLong("meal_id"),
       		        rs.getLong("meal_category_id"),
       		        rs.getLong("meal_sub_category_id"),
       		        rs.getString("manufacturer_name"),
 	                rs.getString("image_file_name"),
+	                product_img_relative_path + rs.getString("image_file_name"),
 	                rs.getLong("product_id"),
 	                rs.getDouble("selling_prize"),
 	                rs.getDouble("list_prize"),

@@ -51,7 +51,7 @@ class ComparatorView extends Component {
   };
 
   updatedFilteredProductsList = () => {
-    // console.log("updatedFilteredProductsList - START");
+    console.log("updatedFilteredProductsList - START");
     let productsFromApi = [...this.state.productsFromApi];
     let filteredProductsForList = productsFromApi.filter(
       (product) =>
@@ -62,6 +62,7 @@ class ComparatorView extends Component {
             product.meal_sub_category_id === this.state.selectedMealSubCategoryId)
         
     );
+    console.log("updatedFilteredProductsList - DEBUG - filteredProductsForList.length: " + filteredProductsForList.length);
     const filteredProductsList = filteredProductsForList.map((product) => (
       <li key={product.id}>
         <img
