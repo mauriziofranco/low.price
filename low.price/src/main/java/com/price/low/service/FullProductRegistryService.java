@@ -33,7 +33,7 @@ public class FullProductRegistryService {
 
 	public static final Logger logger = LoggerFactory.getLogger(FullProductRegistryService.class);
 
-	@Value("${app.folder.products.img}")
+	@Value("${product.img.relative.path}")
 	public String IMG_DIR;
 	
 	@Autowired
@@ -53,7 +53,7 @@ public class FullProductRegistryService {
 	public List<ProductRecord> getAll() {
 		logger.info("getAll - START");
 		List<ProductRecord> items = productRecordRepository.findAllProducts();
-		logger.info("getAll - END - returning " + items.size() + " ProductRecord.");
+		logger.info("getAll - END - returning " + items.size() + " ProductRecord records.");
 		return items;
 	}
 	
