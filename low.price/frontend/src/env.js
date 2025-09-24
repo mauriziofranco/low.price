@@ -1,5 +1,5 @@
-// export const HOST = "localhost" ;
-export const HOST = "192.168.134.223" ;
+export const HOST = "localhost" ;
+//export const HOST = "192.168.134.223" ;
 
 export const PORT = "8080" ;
 export const APPLICATION_CONTEXT = "" ;

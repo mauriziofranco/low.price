@@ -137,6 +137,7 @@ class ComparatorView extends Component {
           .then((data) => ({ status: response.status, body: data }))
       )
       .then((data) => {
+		  console.log(data);
         let fetchedMealCategoriesFromApi = data.body._embedded.mealCategories;
         this.setState({ mealCategoriesFromApi: fetchedMealCategoriesFromApi });
         this.prepareMealCategoriesListForSelect();
