@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>franco.maurizio</groupId>
 	<artifactId>low.price</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 	<name>low.price</name>
 	<description>Price products comparator</description>
 	<properties>
